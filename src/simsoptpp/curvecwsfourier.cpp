@@ -359,7 +359,7 @@ void CurveCWSFourier<Array>::dgamma_by_dcoeff_impl(Array &data)
     CurveCWSFourier<Array>::set_dofs_surface(idofs);
     data *= 0;
 
-#pragma omp parallel for
+//#pragma omp parallel for
     for (int k = 0; k < numquadpoints; ++k)
     {
         std::cout << "quadpoint: " << k << std::endl;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "curve.h"
+#include "surface.h"
+
 
 template <class Array>
 class CurveCWSFourier : public Curve<Array>
@@ -13,6 +15,7 @@ public:
     using Curve<Array>::quadpoints;
     using Curve<Array>::numquadpoints;
     using Curve<Array>::check_the_persistent_cache;
+    
 
     double phi_l;
     double theta_l;
@@ -20,6 +23,8 @@ public:
     Array phi_c;
     Array theta_c;
     Array theta_s;
+
+    Surface surf;
 
     // SURFACE
     // const shared_ptr<Surface<Array>> surface;
@@ -30,6 +35,17 @@ public:
     Array rs;
     Array zc;
     Array zs;
+
+    CurveCWSFourier(Surface& _surf, int _numquadpoints, int _order) : Curve<Array>(_numquadpoints), order(_order)
+    {
+        surf = _surf;
+        phi_l = 0;
+        theta_l = 0;
+        phi_s = xt::zeros<double>({order});
+        phi_c = xt::zeros<double>({order + 1});
+        theta_s = xt::zeros<double>({order});
+        theta_c = xt::zeros<double>({order + 1});
+    }
 
     CurveCWSFourier(int _mpol, int _ntor, vector<double> _idofs, int _numquadpoints, int _order, int _nfp, bool _stellsym) : Curve<Array>(_numquadpoints), order(_order), nfp(_nfp), stellsym(_stellsym), mpol(_mpol), ntor(_ntor), idofs(_idofs)
     {
