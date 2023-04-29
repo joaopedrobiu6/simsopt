@@ -163,6 +163,10 @@ class MPIFiniteDifference:
         self.jac_size = None
         self.eval_cnt = 1
 
+        # initialize cache
+        self.x_cache = None
+        self.jac_cache = None
+
     def __enter__(self):
         self.mpi_apart()
         self.init_log()
@@ -187,7 +191,9 @@ class MPIFiniteDifference:
             self.log_file.close()
 
     # Called by MPI leaders
-    def _jac(self, x: RealArray = None):
+    def _jac(self, x: RealArray = None, *args):
+        # *args are considered non_dofs that should also
+        # be broadcast when performing parallel computations
         # Use shortcuts for class variables
         opt = self.opt
         mpi = self.mpi
@@ -205,6 +211,8 @@ class MPIFiniteDifference:
         nparams = opt.dof_size
         # Make sure all leaders have the same x0.
         mpi.comm_leaders.Bcast(x0)
+        non_dofs = np.array(args) if args else None
+        non_dofs = mpi.comm_leaders.bcast(non_dofs, root=0)
         logger.info(f'nparams: {nparams}')
         logger.info(f'x0:  {x0}')
 
@@ -249,6 +257,7 @@ class MPIFiniteDifference:
                 x = xs[:, j]
                 mpi.comm_groups.bcast(x, root=0)
                 opt.x = x
+                self.opt.non_dofs = non_dofs
                 out = np.asarray(self.fn())
 
                 if evals is None and mpi.proc0_world:
@@ -333,6 +342,8 @@ class MPIFiniteDifference:
         """
         Called by proc0
         """
+        if np.all(x == self.x_cache) and (self.jac_cache is not None):
+            return self.jac_cache
 
         ARB_VAL = 100
         logger.debug("Entering jac evaluation")
@@ -354,7 +365,7 @@ class MPIFiniteDifference:
         self.mpi.mobilize_leaders(ARB_VAL)  # Any value not equal to STOP
         self.mpi.comm_leaders.bcast(x, root=0)
 
-        jac, xs, evals = self._jac(x)
+        jac, xs, evals = self._jac(x, args)
         logger.debug(f'jac is {jac}')
 
         # Write to the log file:
@@ -377,5 +388,9 @@ class MPIFiniteDifference:
             logfile.flush()
 
         self.eval_cnt += nevals
+
+        # cache it
+        self.x_cache = x
+        self.jac_cache = jac
 
         return jac
