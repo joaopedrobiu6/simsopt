@@ -52,26 +52,18 @@ simsopt.geo.curveperturbed module
    :undoc-members:
    :show-inheritance:
 
+simsopt.geo.curveplanarfourier module
+-------------------------------------
+
+.. automodule:: simsopt.geo.curveplanarfourier
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simsopt.geo.curverzfourier module
 ---------------------------------
 
 .. automodule:: simsopt.geo.curverzfourier
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-simsopt.geo.curveplanarfourier module
--------------------------------------
-
-.. automodule:: simsopt.geo.curveplanarfourier
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-simsopt.geo.curveplanarfourier module
--------------------------------------
-
-.. automodule:: simsopt.geo.curveplanarfourier
    :members:
    :undoc-members:
    :show-inheritance:
@@ -146,18 +138,18 @@ simsopt.geo.plotting module
    :undoc-members:
    :show-inheritance:
 
-simsopt.geo.qfmsurface module
------------------------------
+simsopt.geo.ports module
+------------------------
 
-.. automodule:: simsopt.geo.qfmsurface
+.. automodule:: simsopt.geo.ports
    :members:
    :undoc-members:
    :show-inheritance:
 
-simsopt.geo.strain_optimization module
---------------------------------------
+simsopt.geo.qfmsurface module
+-----------------------------
 
-.. automodule:: simsopt.geo.strain_optimization
+.. automodule:: simsopt.geo.qfmsurface
    :members:
    :undoc-members:
    :show-inheritance:
@@ -226,3 +218,10 @@ simsopt.geo.surfacexyztensorfourier module
    :undoc-members:
    :show-inheritance:
 
+simsopt.geo.wireframe\_toroidal module
+--------------------------------------
+
+.. automodule:: simsopt.geo.wireframe_toroidal
+   :members:
+   :undoc-members:
+   :show-inheritance:
