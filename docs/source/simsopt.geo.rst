@@ -162,6 +162,14 @@ simsopt.geo.strain_optimization module
    :undoc-members:
    :show-inheritance:
 
+simsopt.geo.strain_optimization module
+--------------------------------------
+
+.. automodule:: simsopt.geo.strain_optimization
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 simsopt.geo.surface module
 --------------------------
 
